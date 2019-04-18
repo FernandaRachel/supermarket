@@ -1,3 +1,4 @@
-var app = require('./config/server')();
+var app = require('./config/server.config')();
 require('./db/index')();
-require('./routes/products')(app);
+var prodRoute = require('./routes/products');
+app.use('/api/v1/products', prodRoute);

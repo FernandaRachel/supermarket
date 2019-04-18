@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
-import Products from './pages/products/products';
-import Header from './shared/navbar/Header';
 import 'materialize-css/dist/css/materialize.min.css'
-import { Grid } from '@material-ui/core';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'font-awesome/css/font-awesome.min.css'
+import Header from './components/shared/navbar/Header';
+import Routes from './routes'
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Header />
-          <Grid container>
-            <Products />
-            </Grid>
+        <Routes />
       </div>
     );
   }

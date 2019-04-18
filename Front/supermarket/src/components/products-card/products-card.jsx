@@ -1,48 +1,55 @@
-import React  from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-
+import farinha from '../../assets/images/farinha.jpg'
 
 const styles = {
     card: {
-        maxWidth: 345,
+        display: 'flex',
+        width: '10rem',
     },
     media: {
-        height: 140,
+        height: '8rem',
+        width: '8rem'
     },
 };
 
-function ProductsCard(props) {
-    const { classes } = props;
-    return (
-        <Card className={classes.card}>
-            <CardActionArea>
-                <CardMedia
-                    className={classes.media}
-                    image="/static/images/cards/contemplative-reptile.jpg"
-                    title="Contemplative Reptile"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        <p>{props.name}</p>
-                        <p>Preço: R$ {props.preco}</p>
-                    </Typography>
-                    <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-          </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-            </CardActions>
-        </Card>
-    );
+class ProductsCard extends Component {
+    //   constructor (props) {
+    //     super(props);
+    // }
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <div className={classes.card}>
+                <div className="card">
+                    <div className="card-body">
+                        <img src={farinha} className={classes.media} alt="farinha" />
+                        <div>
+                            <small>{this.props.name}</small>
+                            <small>Preço: R$ {this.props.price}</small>
+                        </div>
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                            <button className="btn btn-outline-success">
+                                <i className="fa fa-plus"></i>
+                            </button>
+                            <div className="form-group">
+                            <input className="form-control" type="number"/>
+                            </div>
+                            {/* <button className="btn btn-dark">
+                                <i className="text-white fa fa-cart-plus"></i>
+                            </button> */}
+                            <button className="btn btn-outline-danger">
+                                <i className="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 ProductsCard.propTypes = {

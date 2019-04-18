@@ -1,17 +1,17 @@
-const productService = require('../products');
+const productService = require('../../services/products.service');
+const products = require('../../db/models/products.model');
 const express = require('express');
-// const router = express;
-// const router = express;
+const router = express.Router();
 
-module.exports = function(app) {
+router.use(function timeLog(req, res, next) {
+    console.log('Time: ', Date.now());
+    next();
+});
 
-    app.get('/', function(req, res) {
-        console.log('entrou');
+router.get('/', function(req, res) {
+    productService.getAll(res);
+});
 
-        // productService.getAll();
-        return res.send('Hello');
-    })
-    console.log('====================================');
-    console.log('ROTAS OK');
-    console.log('====================================');
-}
+console.log('Rota produtos OK');
+
+module.exports = router;
