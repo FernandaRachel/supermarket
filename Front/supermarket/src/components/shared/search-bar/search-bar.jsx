@@ -1,18 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-
-class SearchBar extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {}
-    }
-    render() {
-        return (
-            <div className="col-xs-4">
-                <input type="search" className="form-control" name="search" id="searchBar" />
-            </div>
-        );
-    }
+const SearchBar = props => {
+        console.log(props)
+    return (
+        <div className="d-flex justify-content-center col-md-4 m-2">
+            <input type="search" className="form-control" value={props.searchText}
+                onChange={props.handleSearchchange} name="search" id="searchBar" />
+            <button className="btn btn-default" onClick={props.searchProduct}>
+            <i className="fa fa-search"></i></button>
+        </div>
+    )
 }
-
 export default SearchBar;

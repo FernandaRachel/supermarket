@@ -1,23 +1,23 @@
-
 import React, { Component } from 'react';
 import ProductsCard from '../../components/products-card/products-card';
 import SearchBar from '../../components/shared/search-bar/search-bar';
 import axios from 'axios';
 import urls from '../../assets/url-config'
+// import debounce from 'lodash.debounce';
 
-// export default (props) =>
-// const style = {
 
-// }
 class Products extends Component {
     constructor (props) {
         super(props);
         this.requestProducts();
         this.state = {
-            products: []
+            products: [],
+            searchText: ''
         }
         this.alterQuantity = this.alterQuantity.bind(this);
         this.handleInputchange = this.handleInputchange.bind(this);
+        this.handleSearchchange = this.handleSearchchange.bind(this);
+        this.searchProduct = this.searchProduct.bind(this);
     }
 
     alterQuantity(diff, id) {
@@ -36,22 +36,40 @@ class Products extends Component {
     handleInputchange(e, id) {
         const value = parseInt(e.target.value);
         this.alterQuantity(value, id);
+    }
+
+    handleSearchchange(e) {
         console.log(e.target.value)
-        console.log(id)
+        const newValue = e.target.value;
+        this.setState(state => {
+            return { searchText: newValue }
+        })
+    }
+
+    addInputQtdToArray(resp) {
+        const products = resp.data.map(el => {
+            el.inputQtd = 0
+            return el;
+        });
+        this.setState({
+            products: products
+        });
     }
 
     requestProducts() {
         axios.get(urls['produtos-get'])
             .then((resp) => {
-                const products = resp.data.map(el => {
-                    el.inputQtd = 0
-                    return el;
-                });
-                console.log(products)
-                this.setState({
-                    products: products
-                });
+                this.addInputQtdToArray(resp);
             })
+    }
+
+    searchProduct() {
+        // debounce
+        console.log('searchProduct')
+        axios.get(`${urls['products-get-by-name']}${this.state.searchText}`)
+            .then((resp) => {
+                this.addInputQtdToArray(resp);
+            });
     }
 
     renderProductList() {
@@ -63,9 +81,8 @@ class Products extends Component {
     render() {
         return (
             <div className="col-md-12">
-                <div className="col-md-12">
-                    <SearchBar/>
-                </div>
+                <SearchBar searchText={this.state.searchText} handleSearchchange={this.handleSearchchange}
+                    searchProduct={this.searchProduct} />
                 <div className="d-flex flex-row wrap justify-content-center">
                     {
                         this.state.products.map(prod =>
