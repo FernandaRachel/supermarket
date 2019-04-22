@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import farinha from '../../assets/images/farinha.jpg'
 
 const styles = {
@@ -21,28 +20,23 @@ class ProductsCard extends Component {
 
     render() {
         const { classes } = this.props;
-
+        console.log(this.props);
         return (
-            <div className={classes.card}>
+            <div className={styles.card}>
                 <div className="card">
                     <div className="card-body">
-                        <img src={farinha} className={classes.media} alt="farinha" />
+                        <img src={farinha} className={styles.media} alt="farinha" />
                         <div>
                             <small>{this.props.name}</small>
                             <small>Preço: R$ {this.props.price}</small>
                         </div>
-                        <div className="btn-group" role="group" aria-label="Basic example">
-                            <button className="btn btn-outline-success">
-                                <i className="fa fa-plus"></i>
-                            </button>
-                            <div className="form-group">
-                            <input className="form-control" type="number"/>
-                            </div>
-                            {/* <button className="btn btn-dark">
-                                <i className="text-white fa fa-cart-plus"></i>
-                            </button> */}
+                        <div className="d-flex justify-content-center">
                             <button className="btn btn-outline-danger">
-                                <i className="fa fa-minus"></i>
+                                <i className="fa fa-minus" onClick={() => this.props.alterQuantity(-1, this.props.id)}></i>
+                            </button>
+                            <input type="number" className="form-control" readOnly value={this.props.qtd} />
+                            <button className="btn btn-outline-success">
+                                <i className="fa fa-plus" onClick={() => this.props.alterQuantity(+1, this.props.id)}></i>
                             </button>
                         </div>
                     </div>
@@ -52,8 +46,8 @@ class ProductsCard extends Component {
     }
 }
 
-ProductsCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+// ProductsCard.propTypes = {
+//     classes: PropTypes.object.isRequired,
+// };
 
-export default withStyles(styles)(ProductsCard);
+export default ProductsCard;
