@@ -3,4 +3,5 @@ const urls = {
     'products-get-by-name': 'http://localhost:3001/api/v1/products/prodName/'
 }
 
-module.exports = urls;
+export default urls;
+// module.exports = urls;

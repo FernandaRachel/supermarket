@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ProductsCard from '../../components/products-card/products-card';
-import SearchBar from '../../components/shared/search-bar/search-bar';
+import SearchBar from '../../shared/components/search-bar/search-bar';
 import axios from 'axios';
 import urls from '../../assets/url-config'
+import CartBadge from '../../components/cart-badge/cart-badge'
+import Loader from '../../shared/components/loader/loader'
 // import debounce from 'lodash.debounce';
 
 
@@ -12,27 +14,33 @@ class Products extends Component {
         this.requestProducts();
         this.state = {
             products: [],
-            searchText: ''
+            searchText: '',
+            loading: false,
+            cartList: []
         }
         this.alterQuantity = this.alterQuantity.bind(this);
         this.handleInputchange = this.handleInputchange.bind(this);
         this.handleSearchchange = this.handleSearchchange.bind(this);
         this.searchProduct = this.searchProduct.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     alterQuantity(diff, id) {
         this.setState((state) => {
-            const prodList = this.state.products;
-            const prod = this.state.products.find(el => el._id === id);
+            const prodList = state.products;
+            const prod = state.products.find(el => el._id === id);
             let index;
             if (prod)
-                index = this.state.products.indexOf(prod);
+                index = state.products.indexOf(prod);
             prod.inputQtd = prod.inputQtd + diff;
             prodList.splice(index, 1, prod)
             return { products: prodList }
         })
     }
 
+    /**
+     * Input handlers
+     */
     handleInputchange(e, id) {
         const value = parseInt(e.target.value);
         this.alterQuantity(value, id);
@@ -52,11 +60,33 @@ class Products extends Component {
             return el;
         });
         this.setState({
-            products: products
+            products: products,
+            loading: false
         });
     }
 
+    addToCart(id) {
+        this.setState(state => {
+            const prod = state.products.find(el => el._id === id);
+            const cartProd = state.cartList.find(el => el._id === id);
+            const cartList = state.cartList;
+            if (!cartProd) {
+                cartList.push(prod);
+            }else{
+                return;
+            }
+            return { cartList: cartList }
+        })
+    }
+
+
+    /**
+     * API CALLS
+     */
     requestProducts() {
+        this.setState(state => {
+            return { loading: true }
+        })
         axios.get(urls['produtos-get'])
             .then((resp) => {
                 this.addInputQtdToArray(resp);
@@ -64,7 +94,12 @@ class Products extends Component {
     }
 
     searchProduct() {
+        if (!this.state.searchText)
+            return this.requestProducts();
         // debounce
+        this.setState(state => {
+            return { loading: true }
+        })
         console.log('searchProduct')
         axios.get(`${urls['products-get-by-name']}${this.state.searchText}`)
             .then((resp) => {
@@ -79,19 +114,34 @@ class Products extends Component {
     }
 
     render() {
+        const loading = this.state.loading;
+        console.log(loading)
         return (
-            <div className="col-md-12">
-                <SearchBar searchText={this.state.searchText} handleSearchchange={this.handleSearchchange}
-                    searchProduct={this.searchProduct} />
-                <div className="d-flex flex-row wrap justify-content-center">
-                    {
-                        this.state.products.map(prod =>
-                            <ProductsCard key={prod._id} name={prod.name} price={prod.price} id={prod._id}
-                                alterQuantity={this.alterQuantity} qtd={prod.inputQtd}
-                                handleInputchange={this.handleInputchange}></ProductsCard>
+            <div>
+                {
+                    loading ? (
+                        <div className="m-4">
+                            <Loader />
+                        </div>
+                    ) : (
+                            <div className="col-md-12">
+                                <div className="d-flex flex-row justify-content-around m-4">
+                                    <SearchBar searchText={this.state.searchText} handleSearchchange={this.handleSearchchange}
+                                        searchProduct={this.searchProduct} />
+                                    <CartBadge cartList={this.state.cartList} />
+                                </div>
+                                <div className="d-flex flex-row wrap justify-content-center">
+                                    {
+                                        this.state.products.map(prod =>
+                                            <ProductsCard key={prod._id} name={prod.name} price={prod.price} id={prod._id}
+                                                alterQuantity={this.alterQuantity} qtd={prod.inputQtd}
+                                                handleInputchange={this.handleInputchange} addToCart={this.addToCart}></ProductsCard>
+                                        )
+                                    }
+                                </div>
+                            </div>
                         )
-                    }
-                </div>
+                }
             </div>
         );
     }
