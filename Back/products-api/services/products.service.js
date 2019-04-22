@@ -16,7 +16,8 @@ module.exports = {
         });
     },
     getByName: function(prodName, resp) {
-        var search = products.find({ name: prodName });
+        var regex = new RegExp(prodName, 'i');
+        var search = products.find({ name: regex });
         search.exec(function(err, data) {
             console.log(data)
             if (err) {
