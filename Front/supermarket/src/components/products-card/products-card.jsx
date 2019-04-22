@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import farinha from '../../assets/images/farinha.jpg'
+import styles from './products-card.module.css'
 
-const styles = {
-    card: {
-        display: 'flex',
-        width: '10rem',
-    },
-    media: {
-        height: '8rem',
-        width: '8rem'
-    },
-};
+// const styles = {
+//     card: {
+//         display: 'flex',
+//         width: '10rem',
+//     },
+//     media: {
+//         height: '8rem',
+//         width: '8rem'
+//     },
+// };
 
 class ProductsCard extends Component {
     //   constructor (props) {
@@ -19,11 +19,11 @@ class ProductsCard extends Component {
     // }
 
     render() {
-        const { classes } = this.props;
-        console.log(this.props);
+        // console.log(this.props);
+        console.log(styles)
         return (
-            <div className={styles.card}>
-                <div className="card">
+            <div className={styles.cardContainer}>
+                <div className="card card-container">
                     <div className="card-body">
                         <img src={farinha} className={styles.media} alt="farinha" />
                         <div>
@@ -45,9 +45,5 @@ class ProductsCard extends Component {
         );
     }
 }
-
-// ProductsCard.propTypes = {
-//     classes: PropTypes.object.isRequired,
-// };
 
 export default ProductsCard;
