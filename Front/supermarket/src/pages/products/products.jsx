@@ -12,17 +12,27 @@ class Products extends Component {
     constructor (props) {
         super(props);
         this.requestProducts();
+        /**
+         * State assingments
+         */
         this.state = {
             products: [],
             searchText: '',
             loading: false,
             cartList: []
         }
+        /**
+         * Functions binds
+         */
         this.alterQuantity = this.alterQuantity.bind(this);
         this.handleInputchange = this.handleInputchange.bind(this);
         this.handleSearchchange = this.handleSearchchange.bind(this);
         this.searchProduct = this.searchProduct.bind(this);
         this.addToCart = this.addToCart.bind(this);
+    }
+
+    componentDidMount() {
+        this.getCartList();
     }
 
     alterQuantity(diff, id) {
@@ -36,6 +46,16 @@ class Products extends Component {
             prodList.splice(index, 1, prod)
             return { products: prodList }
         })
+    }
+
+
+    getCartList() {
+        const cartList = JSON.parse(sessionStorage.getItem('cart-list'))
+        if (cartList) {
+            this.setState((state) => {
+                return { cartList: cartList }
+            })
+        }
     }
 
     /**
@@ -75,7 +95,18 @@ class Products extends Component {
                 cartList.push(prod);
                 sessionStorage.setItem('cart-list', JSON.stringify(cartList));
             } else {
-                return;
+                const cartUpdated = state.cartList;
+                state.cartList.forEach(c => {
+                    if (c._id === prod._id) {
+                        c.inputQtd = prod.inputQtd;
+                        // cartUpdated.push(c);
+                        console.log(cartUpdated);
+                        /**
+                         * Update the cartList in state
+                         */
+                        return { cartList: cartList }
+                    }
+                });
             }
             return { cartList: cartList }
         })

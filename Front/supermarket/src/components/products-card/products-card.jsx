@@ -13,27 +13,31 @@ const ProductsCard = props => {
                     <div>
                         <small>Preço: {currencyFormatter.format('br', props.price)}</small>
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <div>
-                            <button className="btn btn-outline-danger" disabled={!props.qtd}>
-                                <i className="fa fa-minus" onClick={() => props.alterQuantity(-1, props.id)}></i>
-                            </button>
-                        </div>
-                        <div>
-                            <input type="text" className="form-control" readOnly value={props.qtd} />
-                        </div>
-                        <div>
-                            <button className="btn btn-outline-success">
-                                <i className="fa fa-plus" onClick={() => props.alterQuantity(+1, props.id)}></i>
-                            </button>
-                        </div>
-                    </div>
                     <br />
-                    <div className="d-flex justify-content-center align-items-center">
-                        <small>Total: {currencyFormatter.format('br', props.price * props.qtd)}</small>
-                        <button className="btn btn-light" disabled={!props.qtd}>
-                            <i className="fa fa-cart-plus text-black" onClick={() => props.addToCart(props.id)}></i>
-                        </button>
+                    <div>
+                        <div className="d-flex justify-content-center">
+                            <div>
+                                <button className="btn btn-outline-danger" onClick={() => props.alterQuantity(-1, props.id)} 
+                                disabled={!props.qtd}>
+                                    <i className="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <input type="text" className="form-control" readOnly value={props.qtd} />
+                            </div>
+                            <div>
+                                <button className="btn btn-outline-success" onClick={() => props.alterQuantity(+1, props.id)}>
+                                    <i className="fa fa-plus" ></i>
+                                </button>
+                            </div>
+                        </div>
+                        {/* <br /> */}
+                        <div className="d-flex justify-content-center align-items-center">
+                            <small>Total: {currencyFormatter.format('br', props.price * props.qtd)}</small>
+                            <button className="btn btn-light"  onClick={() => props.addToCart(props.id)} disabled={!props.qtd}>
+                                <i className="fa fa-cart-plus text-black"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
