@@ -2,7 +2,7 @@ import React from 'react'
 import { HashRouter, Route } from 'react-router-dom'
 import Products from './pages/products/products';
 import { Dashboard } from './pages/dashboard/dashboard';
-import { Cart } from './pages/cart/cart'
+import Cart from './pages/cart/cart';
 
 export default props => (
     <HashRouter>

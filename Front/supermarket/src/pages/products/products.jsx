@@ -65,6 +65,7 @@ class Products extends Component {
         });
     }
 
+
     addToCart(id) {
         this.setState(state => {
             const prod = state.products.find(el => el._id === id);
@@ -72,7 +73,8 @@ class Products extends Component {
             const cartList = state.cartList;
             if (!cartProd) {
                 cartList.push(prod);
-            }else{
+                sessionStorage.setItem('cart-list', JSON.stringify(cartList));
+            } else {
                 return;
             }
             return { cartList: cartList }

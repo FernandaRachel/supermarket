@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const CartBadge = props => {
     const cartArr = props.cartList;
-    let qtdInCart = 0; 
+    let qtdInCart = 0;
     for (let index = 0; index < cartArr.length; index++) {
         const element = cartArr[index];
         qtdInCart += element.inputQtd;
@@ -10,8 +11,10 @@ const CartBadge = props => {
     return (
         <div>
             <button type="button" className="btn btn-primary">
-                Cart <span className="badge badge-light">{qtdInCart}</span>
-                <span className="sr-only">Quantity of units added in cart</span>
+                <Link className="text-white" to="/cart">
+                    Cart <span className="badge badge-light">{qtdInCart}</span>
+                    <span className="sr-only">Quantity of units added in cart</span>
+                </Link>
             </button>
         </div>
     )
