@@ -50,10 +50,12 @@ class Products extends Component {
 
 
     getCartList() {
-        const cartList = JSON.parse(sessionStorage.getItem('cart-list'))
-        if (cartList) {
+        const result = sessionStorage.getItem('cart-list');
+        let cartlist = []
+        if (result) {
+            cartlist = JSON.parse(result);
             this.setState((state) => {
-                return { cartList: cartList }
+                return { cartList: cartlist }
             })
         }
     }
@@ -163,7 +165,7 @@ class Products extends Component {
                                         searchProduct={this.searchProduct} />
                                     <CartBadge cartList={this.state.cartList} />
                                 </div>
-                                <div className="d-flex flex-row wrap justify-content-center">
+                                <div className="d-flex flex-row flex-wrap justify-content-center">
                                     {
                                         this.state.products.map(prod =>
                                             <ProductsCard key={prod._id} name={prod.name} price={prod.price} id={prod._id}

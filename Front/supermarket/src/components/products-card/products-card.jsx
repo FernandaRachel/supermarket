@@ -32,7 +32,7 @@ const ProductsCard = props => {
                             </div>
                         </div>
                         {/* <br /> */}
-                        <div className="d-flex justify-content-center align-items-center">
+                        <div className="d-flex  justify-content-center align-items-center">
                             <small>Total: {currencyFormatter.format('br', props.price * props.qtd)}</small>
                             <button className="btn btn-light"  onClick={() => props.addToCart(props.id)} disabled={!props.qtd}>
                                 <i className="fa fa-cart-plus text-black"></i>

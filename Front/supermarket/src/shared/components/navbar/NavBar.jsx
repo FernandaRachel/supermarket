@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+// import { Link } from 'react-router-dom'
 
-class Header extends Component {
+class NavBar extends Component {
     constructor (props) {
         super(props);
         this.state = {}
@@ -20,6 +21,15 @@ class Header extends Component {
                         <li className="nav-item">
                             <a className="nav-link" href="#/products">Products</a>
                         </li>
+                        <li className="nav-item dropdown">
+                            {/* <Link className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </Link>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <Link className="text-white" to="/products">
+                                  Massa
+                                </Link>
+                            </div> */}
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -27,4 +37,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default NavBar;
