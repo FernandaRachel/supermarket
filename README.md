@@ -1,4 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Supermarket Project
+A simple supermarket e-commerce project being developed in React.js, Redux in Frontend and Node.js, Express, MongoDb in Backend
+### Git Backend Repository: https://github.com/FernandaRachel/supermarket-api
 
 ## Available Scripts
 
